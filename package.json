@@ -28,6 +28,6 @@
     },
     "scripts": {
         "dev": "webpack --config=webpack.config.dev.js",
-        "build": "webpack"
+        "build": "node --openssl-legacy-provider node_modules/webpack/bin/webpack.js"
     }
 }
