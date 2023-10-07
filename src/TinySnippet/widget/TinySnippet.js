@@ -19,7 +19,7 @@ define([
 ) {
     "use strict";
 
-    return declare("HTMLSnippet.widget.HTMLSnippet", [_WidgetBase], {
+    return declare("TinySnippet.widget.TinySnippet", [_WidgetBase], {
         // Set in Modeler
         contenttype: "html",
         contents: "",
@@ -188,7 +188,7 @@ define([
                         eval(snippetCode);
                     }).call({
                         jquery: jQuery, // pass JQuery as the context of the immediate function which will wrap the code snippet
-                        widget: this    // pass the HTMLSnippet widget context itself, so the code could use listen/addOnDestroy
+                        widget: this    // pass the TinySnippet widget context itself, so the code could use listen/addOnDestroy
                     }, this.contents); // pass the code snippet as an arg
                 } catch (error) {
                     this._handleError(error);
