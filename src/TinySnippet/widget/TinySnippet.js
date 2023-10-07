@@ -25,7 +25,6 @@ define([
         documentation: "",
         refreshOnContextChange: false,
         refreshOnContextUpdate: false,
-        encloseHTMLWithDiv: true,
 
         // Internal
         _objectChangeHandler: null,

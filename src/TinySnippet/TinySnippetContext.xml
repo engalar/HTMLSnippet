@@ -12,7 +12,7 @@
         <property key="contents" type="translatableString" multiline="true" required="false">
             <caption>Contents</caption>
             <category>Behavior</category>
-            <description>The HTML or Javascript to embed.</description>
+            <description>Javascript to embed.</description>
         </property>
 
         <!-- description of what the html/js should do -->
@@ -36,11 +36,5 @@
             <description>Refresh when the context updates (works only when context change is true)</description>
         </property>
 
-        <!-- Enclose HTML with DIV -->
-        <property key="encloseHTMLWithDiv" type="boolean" defaultValue="true">
-            <caption>Enclose HTML with DIV</caption>
-            <category>Behavior</category>
-            <description>When adding HTML, the widget will wrap it with a DIV. If this is set to false, it will just replace the content of the widget. (For compatibility purposes this is set true on default)</description>
-        </property>
     </properties>
 </widget>
