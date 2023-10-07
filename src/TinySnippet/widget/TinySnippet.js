@@ -22,7 +22,6 @@ define([
     return declare("TinySnippet.widget.TinySnippet", [_WidgetBase], {
         // Set in Modeler
         contents: "",
-        onclickmf: "",
         documentation: "",
         refreshOnContextChange: false,
         refreshOnContextUpdate: false,
@@ -33,9 +32,6 @@ define([
         contextObj: null,
 
         postCreate: function () {
-            console.debug(this.id + ".postCreate");
-            this._setupEvents();
-
             if (!this.refreshOnContextChange) {
                 this.evalJs();
             }
@@ -63,41 +59,6 @@ define([
             }
 
             this._executeCallback(callback, "update");
-        },
-
-        _setupEvents: function () {
-            console.debug(this.id + "._setupEvents");
-            if (this.onclickmf) {
-                this.connect(
-                    this.domNode,
-                    "click",
-                    this._executeMicroflow
-                );
-            }
-        },
-
-        _executeMicroflow: function () {
-            console.debug(this.id + "._executeMicroflow");
-            if (this.onclickmf) {
-                var params = {
-                    actionname: this.onclickmf
-                };
-                if (this.contextObj !== null) {
-                    params.applyto = "selection";
-                    params.guids = [this.contextObj.getGuid()];
-                }
-                mx.data.action({
-                    params: params,
-                    callback: function (obj) {
-                        console.debug(
-                            this.id + " (executed microflow successfully)."
-                        );
-                    },
-                    error: function (error) {
-                        console.error(this.id + error);
-                    }
-                });
-            }
         },
 
         evalJs: function () {
