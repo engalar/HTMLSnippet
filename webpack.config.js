@@ -9,10 +9,10 @@ const widgetName = package.name;
 const widgetNameContext = widgetName + "Context";
 const widgetVersion = package.version;
 
- module.exports = {
+module.exports = {
     entry: {
-        [widgetName]: [ "core-js/es/promise", `./src/${widgetName}/widget/${widgetName}.js` ],
-        [widgetNameContext]: [ "core-js/es/promise", `./src/${widgetName}/widget/${widgetNameContext}.js` ],
+        [widgetName]: [`./src/${widgetName}/widget/${widgetName}.js`],
+        [widgetNameContext]: [`./src/${widgetName}/widget/${widgetNameContext}.js`],
     },
     output: {
         path: path.resolve(__dirname, "dist/tmp/src"),
@@ -23,11 +23,11 @@ const widgetVersion = package.version;
     },
     devtool: false,
     mode: "production",
-    externals: [ /^mxui\/|^mendix\/|^dojo\/|^dijit\// ],
+    externals: [/^mxui\/|^mendix\/|^dojo\/|^dijit\//],
     plugins: [
         new webpack.LoaderOptionsPlugin({ debug: true }),
         new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: "dist/tmp" }),
-        new CopyWebpackPlugin([ {context: "src", from: "**/*.xml", debug: true} ], { copyUnmodified: true }),
+        new CopyWebpackPlugin([{ context: "src", from: "**/*.xml", debug: true }], { copyUnmodified: true }),
         new ZipPlugin({ path: `../../${widgetVersion}`, filename: widgetName, extension: "mpk" })
     ]
 };

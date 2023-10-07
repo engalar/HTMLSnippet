@@ -5,7 +5,7 @@
 	elementFormDefault="qualified">
 
 	<xs:element name="widget" type="widgetType"/>
-	
+
 	<xs:complexType name="widgetType">
 		<xs:sequence>
       <xs:element name="name" type="xs:string"/>
@@ -17,7 +17,7 @@
     <xs:attribute name="needsEntityContext" type="xs:boolean" use="required"/>
     <xs:attribute name="mobile" type="xs:boolean" default="false"/>
   </xs:complexType>
-	
+
 	<xs:complexType name="propertiesType">
 		<xs:sequence>
 			<xs:element name="property" type="propertyType" minOccurs="1" maxOccurs="unbounded"/>
@@ -35,7 +35,7 @@
       <xs:element name="returnType" type="returnTypeType" minOccurs="0"/>
       <xs:element name="translations" type="translationsType" minOccurs="0"/>
     </xs:sequence>
-		<xs:attribute name="key" type="xs:string" use="required"/>     
+		<xs:attribute name="key" type="xs:string" use="required"/>
 		<xs:attribute name="type" type="propertyTypeType" use="required"/>
     <xs:attribute name="isList" type="xs:boolean" default="false"/>
     <xs:attribute name="entityProperty" type="xs:string"/>
@@ -60,6 +60,7 @@
       <xs:enumeration value="image"/>
       <xs:enumeration value="integer"/>
       <xs:enumeration value="microflow"/>
+      <xs:enumeration value="nanoflow"/>
       <xs:enumeration value="object"/>
       <xs:enumeration value="string"/>
       <xs:enumeration value="translatableString"/>
