@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<widget id="TinySnippet.widget.TinySnippetContext" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
+<widget id="TinySnippet.widget.TinySnippetContext" needsEntityContext="true"
+    xmlns="http://www.mendix.com/widget/1.0/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../../xsd/widget.xsd">
     <name>TinySnippet with Context</name>
     <description>The TinySnippet widget can be used to insert a custom piece of HTML or JavaScript in the client</description>
 
