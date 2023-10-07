@@ -15,13 +15,6 @@
             <description>Javascript to embed.</description>
         </property>
 
-        <!-- description of what the html/js should do -->
-        <property key="documentation" type="string" multiline="true" required="false">
-            <caption>Documentation</caption>
-            <category>Common</category>
-            <description>Documentation of this widget. Should explain its purpose.</description>
-        </property>
-
         <!-- Refresh when the context changes -->
         <property key="refreshOnContextChange" type="boolean" defaultValue="false">
             <caption>Refresh on context change</caption>
