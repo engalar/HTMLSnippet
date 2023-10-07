@@ -22,7 +22,6 @@ define([
     return declare("TinySnippet.widget.TinySnippet", [_WidgetBase], {
         // Set in Modeler
         contents: "",
-        contentsPath: "",
         onclickmf: "",
         documentation: "",
         refreshOnContextChange: false,
@@ -38,24 +37,6 @@ define([
             this._setupEvents();
 
             if (!this.refreshOnContextChange) {
-                this.executeCode();
-            }
-        },
-
-        executeCode: function () {
-            console.debug(this.id + ".executeCode");
-            var external = this.contentsPath !== "" ? true : false;
-
-            if (external) {
-                var scriptNode = document.createElement("script"),
-                    intDate = +new Date();
-
-                scriptNode.type = "text/javascript";
-                scriptNode.src =
-                    this.contentsPath + "?v=" + intDate.toString();
-
-                domConstruct.place(scriptNode, this.domNode, "only");
-            } else {
                 this.evalJs();
             }
         },
@@ -64,7 +45,7 @@ define([
             console.debug(this.id + ".update");
             this.contextObj = obj;
             if (this.refreshOnContextChange) {
-                this.executeCode();
+                this.evalJs();
 
                 if (this.refreshOnContextUpdate) {
                     if (this._objectChangeHandler !== null) {
@@ -74,7 +55,7 @@ define([
                         this._objectChangeHandler = this.subscribe({
                             guid: obj.getGuid(),
                             callback: lang.hitch(this, function () {
-                                this.executeCode();
+                                this.evalJs();
                             })
                         });
                     }
