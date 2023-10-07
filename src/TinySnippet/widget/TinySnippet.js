@@ -21,7 +21,6 @@ define([
 
     return declare("TinySnippet.widget.TinySnippet", [_WidgetBase], {
         // Set in Modeler
-        contenttype: "html",
         contents: "",
         contentsPath: "",
         onclickmf: "",
@@ -46,55 +45,18 @@ define([
         executeCode: function () {
             console.debug(this.id + ".executeCode");
             var external = this.contentsPath !== "" ? true : false;
-            switch (this.contenttype) {
-                case "html":
-                    if (external) {
-                        new LinkPane({
-                                preload: true,
-                                loadingMessage: "",
-                                href: this.contentsPath,
-                                onDownloadError: function () {
-                                    console.log("Error loading html path");
-                                }
-                            })
-                            .placeAt(this.domNode.id)
-                            .startup();
-                    } else if (!this.encloseHTMLWithDiv) {
-                        html.set(this.domNode, this.contents);
-                    } else {
-                        domStyle.set(this.domNode, {
-                            height: "auto",
-                            width: "100%",
-                            outline: 0
-                        });
 
-                        domAttr.set(this.domNode, "style", this.style); // might override height and width
-                        var domNode = domConstruct.create("div", {
-                            innerHTML: this.contents
-                        });
-                        domConstruct.place(domNode, this.domNode, "only");
-                    }
-                    break;
+            if (external) {
+                var scriptNode = document.createElement("script"),
+                    intDate = +new Date();
 
-                case "js":
-                case "jsjQuery":
-                    if (external) {
-                        var scriptNode = document.createElement("script"),
-                            intDate = +new Date();
+                scriptNode.type = "text/javascript";
+                scriptNode.src =
+                    this.contentsPath + "?v=" + intDate.toString();
 
-                        scriptNode.type = "text/javascript";
-                        scriptNode.src =
-                            this.contentsPath + "?v=" + intDate.toString();
-
-                        domConstruct.place(scriptNode, this.domNode, "only");
-                    } else {
-                        if (this.contenttype === "jsjQuery") {
-                            this._evalJQueryCode();
-                        } else {
-                            this.evalJs();
-                        }
-                    }
-                    break;
+                domConstruct.place(scriptNode, this.domNode, "only");
+            } else {
+                this.evalJs();
             }
         },
 
@@ -164,36 +126,6 @@ define([
             } catch (error) {
                 this._handleError(error);
             }
-        },
-
-        _evalJQueryCode: function () {
-            console.debug(this.id + "._evalJQueryCode");
-            require(["jquery"], lang.hitch(this, function(jQuery){
-                try {
-                    (function (snippetCode) {
-                        /**
-                         *  user's are get used to or might expect to have jQuery available globally
-                         *  and they will write their code according to that, and since we, in this widget, don't expose
-                         *  jQuery globally, we'll check user's code snippet if there is any attempt to access jQuery
-                         *  from the global scope ( window ).
-                         */
-                        var jqueryIdRegex1 = /window.\jQuery/g;
-                        var jqueryIdRegex2 = /window.\$/g;
-                        snippetCode = snippetCode.replace(jqueryIdRegex1, 'jQuery');
-                        snippetCode = snippetCode.replace(jqueryIdRegex2, '$');
-                        // make this jQuery version only accessible and available in the scope of this anonymous function
-                        snippetCode = "var jQuery, $; jQuery = $ = this.jquery;" +
-                            snippetCode +
-                            "console.debug('your code snippet is evaluated and executed against JQuery version:'+ this.jquery.fn.jquery);";
-                        eval(snippetCode);
-                    }).call({
-                        jquery: jQuery, // pass JQuery as the context of the immediate function which will wrap the code snippet
-                        widget: this    // pass the TinySnippet widget context itself, so the code could use listen/addOnDestroy
-                    }, this.contents); // pass the code snippet as an arg
-                } catch (error) {
-                    this._handleError(error);
-                }
-            }));
         },
 
         _handleError: function (error) {
