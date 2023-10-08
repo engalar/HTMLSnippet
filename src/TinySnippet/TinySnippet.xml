@@ -30,5 +30,12 @@
             <description>Refresh when the context updates (works only when context change is true)</description>
         </property>
 
+        <!-- description of what the html/js should do -->
+        <property key="documentation" type="string" multiline="true" required="false">
+            <caption>Documentation</caption>
+            <category>Common</category>
+            <description>Documentation of this widget. Should explain its purpose.</description>
+        </property>
+
     </properties>
 </widget>
