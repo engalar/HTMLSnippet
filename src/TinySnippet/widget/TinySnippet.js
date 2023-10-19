@@ -3,12 +3,8 @@ define([
     "mxui/widget/_WidgetBase",
     "dojo/dom-construct",
     "dojo/_base/lang",
-], function (
-    declare,
-    _WidgetBase,
-    domConstruct,
-    lang,
-) {
+    "dojo/aspect",
+], function (declare, _WidgetBase, domConstruct, lang, aspect) {
     "use strict";
 
     return declare("TinySnippet.widget.TinySnippet", [_WidgetBase], {
@@ -22,10 +18,20 @@ define([
         contextObj: null,
 
         postCreate: function () {
+            const signal = aspect.after(
+                this.mxform,
+                "onNavigation",
+                lang.hitch(this, function () {
+                    this.onTinyReady();
+                    signal.remove();
+                })
+            );
             if (!this.refreshOnContextChange) {
                 this.evalJs();
             }
         },
+
+        onTinyReady: function () {},
 
         update: function (obj, callback) {
             this.contextObj = obj;
@@ -41,7 +47,7 @@ define([
                             guid: obj.getGuid(),
                             callback: lang.hitch(this, function () {
                                 this.evalJs();
-                            })
+                            }),
                         });
                     }
                 }
@@ -61,8 +67,8 @@ define([
         _handleError: function (error) {
             domConstruct.place(
                 '<div class="alert alert-danger">Error while evaluating javascript input: ' +
-                error +
-                "</div>",
+                    error +
+                    "</div>",
                 this.domNode,
                 "only"
             );
@@ -72,6 +78,6 @@ define([
             if (cb && typeof cb === "function") {
                 cb();
             }
-        }
+        },
     });
 });
