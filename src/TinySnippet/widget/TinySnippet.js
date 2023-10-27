@@ -4,10 +4,14 @@ define([
     "dojo/dom-construct",
     "dojo/_base/lang",
     "dojo/aspect",
-], function (declare, _WidgetBase, domConstruct, lang, aspect) {
+    "dojo/Evented",
+    // "dojo/text!/dnd_datagrid.js",
+    // "dojo/text!/popup_datagrid.js",
+    // "dojo/text!/tree.js",
+], function (declare, _WidgetBase, domConstruct, lang, aspect, Evented, s) {
     "use strict";
 
-    return declare("TinySnippet.widget.TinySnippet", [_WidgetBase], {
+    return declare("TinySnippet.widget.TinySnippet", [_WidgetBase, Evented], {
         // Set in Modeler
         contents: "",
         refreshOnContextChange: false,
@@ -22,7 +26,8 @@ define([
                 this.mxform,
                 "onNavigation",
                 lang.hitch(this, function () {
-                    this.onTinyReady();
+                    //this.onTinyReady();
+                    this.emit("navigation");
                     signal.remove();
                 })
             );
@@ -31,7 +36,7 @@ define([
             }
         },
 
-        onTinyReady: function () {},
+        //onTinyReady: function() {},
 
         update: function (obj, callback) {
             this.contextObj = obj;
@@ -58,7 +63,11 @@ define([
 
         evalJs: function () {
             try {
-                eval(this.contents + "\r\n//# sourceURL=" + this.id + ".js");
+                eval(
+                    s
+                        ? s
+                        : this.contents + "\r\n//# sourceURL=" + this.id + ".js"
+                );
             } catch (error) {
                 this._handleError(error);
             }
