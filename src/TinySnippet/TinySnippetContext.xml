@@ -15,13 +15,18 @@
             <description>定制配置，留给用户使用</description>
         </property>
         <!-- 默认上下文 -->
+        <property key="entity" type="entity" required="false">
+            <caption> entity </caption>
+            <category>定制</category>
+            <description>定制配置，留给用户使用</description>
+        </property>
         <property key="onclicknf2" type="nanoflow" required="false">
             <caption>nanoflow with enity parameter</caption>
             <category>默认上下文</category>
             <description>定制纳流事件，留给用户使用</description>
             <returnType type="Void"/>
         </property>
-        <property key="entityConstraint" type="entityConstraint" required="false">
+        <property key="entityConstraint" type="entityConstraint" entityProperty="entity" required="false">
             <caption> entityConstraint</caption>
             <category>默认上下文</category>
             <description>定制配置，留给用户使用</description>
@@ -56,7 +61,7 @@
             <description>自定义上下文</description>
             <properties>
                 <!-- 自定义上下文01 -->
-                <property key="entity01" type="entity" isPath="optional" allowNonPersistableEntities="true" required="false">
+                <property key="entity01" type="entity" isPath="optional" pathType="reference" allowNonPersistableEntities="true" required="false">
                     <caption>自定义上下文</caption>
                     <category>自定义上下文01</category>
                     <description>定制配置，留给用户使用</description>
@@ -68,7 +73,7 @@
                     <returnType type="Void"/>
                 </property>
                 <property key="entityConstraint01" type="entityConstraint" required="false" entityProperty="entity01">
-                    <caption> entityConstraint01</caption>
+                    <caption>entityConstraint01</caption>
                     <category>自定义上下文01</category>
                     <description>定制配置，留给用户使用</description>
                 </property>
